@@ -10,33 +10,31 @@
 // @grant        none
 // ==/UserScript==
 
-// 轮询节点
-function pollingQuery(selector, interval, timeout) {
-  const deadline = +new Date() + timeout
-  let timer = null
-  return new Promise((resolve, reject) => {
-    function query() {
-      const result = document.querySelector(selector)
-      if (result) {
-        resolve(result)
-        if (timer) {
-          window.clearTimeout(timer)
-          timer = null
-        }
-      } else if (+new Date() > deadline) {
-        // timeout
-        reject()
-      } else {
-        timer = setTimeout(query, interval)
-      }
-    }
-    query()
-  })
-}
-
 ;(function () {
   'use strict'
-  console.log('script started')
+  // 轮询节点
+  function pollingQuery(selector, interval, timeout) {
+    const deadline = +new Date() + timeout
+    let timer = null
+    return new Promise((resolve, reject) => {
+      function query() {
+        const result = document.querySelector(selector)
+        if (result) {
+          resolve(result)
+          if (timer) {
+            window.clearTimeout(timer)
+            timer = null
+          }
+        } else if (+new Date() > deadline) {
+          // timeout
+          reject()
+        } else {
+          timer = setTimeout(query, interval)
+        }
+      }
+      query()
+    })
+  }
 
   switch (true) {
     case /.*\.lanzou[x|s].com\/[^\/]+/.test(location.href):
