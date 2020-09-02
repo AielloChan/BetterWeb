@@ -15,17 +15,81 @@
 
 ;(function () {
   'use strict'
-  const styleNode = document.createElement('style')
+  // Better Web Configur
+  // ################################################################
+  function BetterWebConfigur(config) {
+    const NAMESPACE = 'BETTER_WEB'
+    const configurator = window.BETTER_CONFIGURATOR
+    const configuratorQuene = window.BETTER_CONFIGURATOR_QUENE || []
+    if (configurator) {
+      configurator(config)
+    } else {
+      configuratorQuene.push(config)
+      window.BETTER_CONFIGURATOR_QUENE = configuratorQuene
+    }
+    const value = localStorage.getItem(`${NAMESPACE}_${config.name}`)
+    const localValue = JSON.parse(value) || {}
+    config.options.forEach((opt) => {
+      if (localValue[opt.name] === undefined) {
+        localValue[opt.name] = opt.default
+      }
+    })
+    return localValue
+  }
+  // ################################################################
 
-  setTimeout(function () {
-    document.title = '知乎'
-  }, 3e3)
+  const config = BetterWebConfigur({
+    name: 'BetterZhihu',
+    label: 'Better 知乎',
+    options: [
+      {
+        name: 'resetTitle',
+        label: '重置标题',
+        type: 'checkbox',
+        default: true,
+      },
+      {
+        name: 'hideHeader',
+        label: '隐藏头部',
+        type: 'checkbox',
+        default: true,
+      },
+      {
+        name: 'fullWidth',
+        label: '回答全宽',
+        type: 'checkbox',
+        default: true,
+      },
+      {
+        name: 'removeLoginAlert',
+        label: '去掉登陆提示',
+        type: 'checkbox',
+        default: true,
+      },
+    ],
+  })
+
+  const styleNode = document.createElement('style')
+  console.log(config)
+
+  if (config.resetTitle) {
+    setTimeout(function () {
+      document.title = '知乎'
+    }, 3e3)
+  }
 
   let cssFix = ''
-  cssFix += '.Question-mainColumn{width:auto;}' // 答案页全宽
-  cssFix += 'header,.Question-sideColumn--sticky{display:none !important;}' // 去掉浮动头部
-  cssFix +=
-    'html{overflow:auto !important;} .Modal-backdrop,.signFlowModal{display:none !important;}' // 干掉登陆提示
+  if (config.fullWidth) {
+    cssFix += '.Question-mainColumn{width:auto;}' // 答案页全宽
+  }
+  if (config.hideHeader) {
+    cssFix += 'header,.Question-sideColumn--sticky{display:none !important;}' // 去掉浮动头部
+  }
+  if (config.removeLoginAlert) {
+    cssFix +=
+      'html{overflow:auto !important;} ' +
+      '.Modal-backdrop,.signFlowModal{display:none !important;}' // 干掉登陆提示
+  }
 
   styleNode.innerText = cssFix
   document.body.append(styleNode)
