@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better Configurator
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      0.1
+// @version      1.0
 // @description  Better Web Plugins' Uni-Configurator
 // @author       Aiello Chan
 // @match        *://*/*
