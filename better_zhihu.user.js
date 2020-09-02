@@ -89,7 +89,7 @@
   if (config.removeLoginAlert) {
     cssFix +=
       'html{overflow:auto !important;} ' +
-      '.Modal-backdrop,.signFlowModal{display:none !important;}' // 干掉登陆提示
+      '.Modal-wrapper {display:none !important;}' // 干掉登陆提示
   }
 
   styleNode.innerText = cssFix
