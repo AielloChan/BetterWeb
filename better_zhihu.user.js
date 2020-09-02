@@ -17,6 +17,7 @@
   'use strict'
   // Better Web Configur
   // ################################################################
+  // better web 通用配置函数，需配合 better configurator 插件使用
   function BetterWebConfigur(config) {
     const NAMESPACE = 'BETTER_WEB'
     const configurator = window.BETTER_CONFIGURATOR
