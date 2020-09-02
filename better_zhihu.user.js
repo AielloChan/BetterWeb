@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better ZhiHu
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.2
+// @version      1.3
 // @description  Better ZhiHu view
 // @author       Aiello Chan
 // @match        *://www.zhihu.com/question/*
@@ -56,6 +56,12 @@
         default: true,
       },
       {
+        name: 'hideSidebar',
+        label: '隐藏侧边栏',
+        type: 'checkbox',
+        default: true,
+      },
+      {
         name: 'fullWidth',
         label: '回答全宽',
         type: 'checkbox',
@@ -84,7 +90,10 @@
     cssFix += '.Question-mainColumn{width:auto;}' // 答案页全宽
   }
   if (config.hideHeader) {
-    cssFix += 'header,.Question-sideColumn--sticky{display:none !important;}' // 去掉浮动头部
+    cssFix += 'header{display:none !important;}' // 去掉浮动头部
+  }
+  if (config.hideSidebar) {
+    cssFix += '.Question-sideColumn--sticky{display:none !important;}' // 去掉侧边栏
   }
   if (config.removeLoginAlert) {
     cssFix +=
