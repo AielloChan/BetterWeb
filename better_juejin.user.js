@@ -35,8 +35,8 @@
   // ################################################################
 
   const config = BetterWebConfigur({
-    name: 'BetterZhihu',
-    label: 'Better 知乎',
+    name: 'BetterJuejin',
+    label: 'Better 掘金',
     options: [
       {
         name: 'fullWidth',
