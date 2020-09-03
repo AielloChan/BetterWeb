@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Better Juejin
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.0
+// @version      1.1
 // @description  Better Juejin view
 // @author       Aiello Chan
-// @match        *:://juejin.im/post/*
+// @match        *://juejin.im/post/*
 // @grant        none
 // ==/UserScript==
 
@@ -57,10 +57,10 @@
 
   let cssFix = ''
   if (config.fullWidth) {
-    cssFix += '.article-area{width:auto;}' // 答案页全宽
+    cssFix += '.article-area {width: auto !important;}' // 答案页全宽
   }
   if (config.hideSidebar) {
-    cssFix += '.sidebar{display:none !important;}' // 隐藏侧边栏
+    cssFix += '.sidebar {display: none !important;}' // 隐藏侧边栏
   }
 
   styleNode.innerText = cssFix
