@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better Juejin
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.1
+// @version      1.2
 // @description  Better Juejin view
 // @author       Aiello Chan
 // @match        *://juejin.im/post/*
