@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         Better lanzou
+// @name         Better Lanzou
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.0
+// @version      1.5
 // @description  auto download lanzou file
 // @author       Aiello Chan
 // @match        *://www.lanzoux.com/*
@@ -16,58 +16,58 @@
   function delay(t) {
     return new Promise((r) => setTimeout(r, t))
   }
-
   // 轮询节点
-  async function pollingQuery(selector, interval, timeout) {
+  async function waitFor(job, interval = 200, timeout = 3e3) {
+    if (!job || !(job instanceof Function)) {
+      throw new Error('job should be a function: ' + job)
+    }
     const deadline = +new Date() + timeout
     let timer = null
     while (true) {
-      const result = document.querySelector(selector)
+      const result = job()
       if (result) {
         return result
       } else if (+new Date() > deadline) {
         // timeout
-        throw new Error('polling query timeout')
+        throw new Error('polling query timeout: ' + selector)
       } else {
         await delay(interval)
       }
     }
+  }
+  async function pollingQuery(selector, interval, timeout) {
+    return await waitFor(
+      () => document.querySelector(selector),
+      interval,
+      timeout,
+    )
   }
 
   const IS_IFRAME = window.self !== window.top
 
   switch (true) {
     case /.*\.lanzou[x|s].com\/[^\/]+/.test(location.href):
-      if (IS_IFRAME) {
+      if (!IS_IFRAME) {
         // base page
-        pollingQuery('#go>a', 200, 3 * 1000)
+        pollingQuery('iframe.n_downlink')
+          .then((iframe) =>
+            waitFor(() => iframe.contentDocument.querySelector('#go>a')),
+          )
           .then((el) => {
-            window.open(el.href)
-            const fileNameNode = window.parent.document.querySelector(
-              '#filenajax',
-            )
-            const message = ` 
-              <div style="text-align: center; margin-top: 10vh;">
-                <div style="color: crimson;">${fileNameNode.innerText}</div>
-                <br/> <br/>
-                <div style="font-size: 1.5em; font-weight: bold;">已成功开始下载，可关闭此窗口</div>
-                <br/>
-                <small style="color: lightgray;">由于安全原因，程序无法自动关闭此页面，请您手动关闭即可</small>
-              </div>`
-            window.parent.document.body.innerHTML = message
+            location.href = el.href
           })
           .catch((err) => {
-            console.log('open download link failed', err.message)
+            console.log('open download link failed: ', err.message)
           })
       }
       break
     case /baidupan.com/.test(location.href):
       // download page
-      pollingQuery('#load2[style="display: none;"]', 200, 3 * 1000)
-        .then(pollingQuery.bind(null, '#sub>div', 200, 3 * 1000))
+      pollingQuery('#load2[style="display: none;"]')
+        .then(() => pollingQuery('#sub>div'))
         .then((el) => {
           el.click()
-          return pollingQuery('#go>a', 200, 3 * 1000)
+          return pollingQuery('#go>a')
         })
         .then((el) => {
           window.open(el.href, '_self')
@@ -85,7 +85,7 @@
           return countdown()
         })
         .catch((err) => {
-          console.log('failed', err.message)
+          console.log('failed: ', err.message)
         })
       break
   }
