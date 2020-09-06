@@ -12,4 +12,4 @@ This project aims to build a sort of tampermonkey/AdGuard plugins(Web Browser ba
 - [Better Juejin](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_juejin.user.js) for 掘金
 - [Better lanzou](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_lanzou.user.js) for 蓝奏云
 - [Better Zhihu](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_zhihu.user.js) for 知乎
-- [Better Jianshu](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_jianshu.user.js) for 知乎
+- [Better Jianshu](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_jianshu.user.js) for 简书
