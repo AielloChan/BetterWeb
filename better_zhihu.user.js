@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better ZhiHu
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.3
+// @version      1.4
 // @description  Better ZhiHu view
 // @author       Aiello Chan
 // @match        *://www.zhihu.com/question/*
@@ -87,7 +87,7 @@
 
   let cssFix = ''
   if (config.fullWidth) {
-    cssFix += '.Question-mainColumn{width:auto;}' // 答案页全宽
+    cssFix += '.Question-mainColumn {width: 100%;}' // 答案页全宽
   }
   if (config.hideHeader) {
     cssFix += 'header{display:none !important;}' // 去掉浮动头部
