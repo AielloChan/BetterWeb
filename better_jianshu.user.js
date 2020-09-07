@@ -52,7 +52,7 @@
       },
       {
         name: 'fullWidth',
-        label: '回答全宽',
+        label: '文章全宽',
         type: 'checkbox',
         default: true,
       },
