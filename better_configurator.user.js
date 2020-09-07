@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better Configurator
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.0
+// @version      1.1
 // @description  Better Web Plugins' Uni-Configurator
 // @author       Aiello Chan
 // @match        *://*/*
@@ -16,13 +16,14 @@
   }
 
   const NAMESPACE = 'BETTER_WEB'
-  const style = document.createElement('style')
-  style.innerText = `
+  const createElement = document.createElement.bind(document)
+  const style = createElement('style')
+  style.innerHTML = `
     .${NAMESPACE}__container{
       position: fixed;
       z-index: 999;
       background: #f6f6f6;
-      right: -161px;
+      right: -150px;
       top: 50px;
       width: 150px;
       border: 1px solid #d3d3d3;
@@ -31,6 +32,11 @@
       padding: 5px;
       transition: right 600ms cubic-bezier(.22,.69,.2,1.03);
     }
+    .${NAMESPACE}__container ol, .${NAMESPACE}__container ul {
+      padding-left: 10px;
+      margin: 0;
+      list-style: none;
+    }
     .${NAMESPACE}__bar{
       position: absolute;
       background: #f6f6f6;
@@ -38,7 +44,7 @@
       border: 1px solid #d3d3d3;
       border-right: 0;
       width: 5px;
-      left: -6px;
+      left: -5px;
       height: 30px;
       z-index: 2;
     }
@@ -58,7 +64,7 @@
     localStorage.setItem(`${NAMESPACE}_${pluginName}`, JSON.stringify(config))
   }
 
-  function makeNodeFromConfig(configs) {
+  function makeNodeListFromConfig(configs) {
     const pluginName = configs.name
     const options = configs.options
     const config = readConfig(pluginName)
@@ -75,11 +81,11 @@
     return options.map((cfg) => {
       switch (cfg.type) {
         case 'checkbox':
-          var label = document.createElement('label')
-          var input = document.createElement('input')
+          var label = createElement('label')
+          var input = createElement('input')
           var curValue = config[cfg.name]
-          label.innerText = cfg.label
-          label.appendChild(input)
+          label.innerHTML = cfg.label
+          label.prepend(input)
           input.type = 'checkbox'
           input.checked = curValue === undefined ? cfg.default : curValue
 
@@ -97,16 +103,19 @@
     const options = config.options
     let container = document.querySelector('#' + pluginName)
     if (!container) {
-      container = document.createElement('div')
+      container = createElement('div')
       container.id = NAMESPACE
       container.className = `${NAMESPACE}__container`
       container.innerHTML = `<div class="${NAMESPACE}__bar"></div>`
       document.body.append(container)
     }
     container.innerHTML += `<strong>${pluginLabel}</strong><br/>`
-    makeNodeFromConfig(config).forEach((node) => {
-      container.appendChild(node)
-      container.appendChild(document.createElement('br'))
+    const listContainer = createElement('ul')
+    container.appendChild(listContainer)
+    makeNodeListFromConfig(config).forEach((node) => {
+      const li = createElement('li')
+      li.appendChild(node)
+      listContainer.appendChild(li)
     })
   }
   window.BETTER_CONFIGURATOR = configurator
