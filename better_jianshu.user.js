@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better Jianshu
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.0
+// @version      1.1
 // @description  Better Jianshu view
 // @author       Aiello Chan
 // @match        *://www.jianshu.com/p/*
@@ -67,7 +67,7 @@
     cssFix += 'header{display:none !important;}' // 去掉浮动头部
   }
   if (config.hideSidebar) {
-    cssFix += '.aside{display:none !important;}' // 去掉侧边栏
+    cssFix += 'aside{display:none !important;}' // 去掉侧边栏
   }
   if (config.fullWidth) {
     cssFix += 'div[role="main"]>div {width: 100%;}' // 答案页全宽
