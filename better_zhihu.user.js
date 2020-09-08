@@ -1,15 +1,10 @@
 // ==UserScript==
 // @name         Better ZhiHu
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.4
+// @version      1.5
 // @description  Better ZhiHu view
 // @author       Aiello Chan
-// @match        *://www.zhihu.com/question/*
-// @match			   *://www.zhihu.com/search*
-// @match			   *://www.zhihu.com/hot
-// @match			   *://www.zhihu.com/follow
-// @match			   *://www.zhihu.com/
-// @match        *://www.zhihu.com/signin*
+// @match        *://*.zhihu.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -73,34 +68,68 @@
         type: 'checkbox',
         default: true,
       },
+      {
+        name: 'directlyRoute',
+        label: '直接跳转',
+        type: 'checkbox',
+        default: true,
+      },
     ],
   })
 
-  const styleNode = document.createElement('style')
-  console.log(config)
+  const href = location.href
+  switch (true) {
+    case /www.zhihu.com\/(question|search|hot|follow|signin|)/.test(href):
+      // @match        *://www.zhihu.com/question/*
+      // @match			   *://www.zhihu.com/search/*
+      // @match			   *://www.zhihu.com/hot
+      // @match			   *://www.zhihu.com/follow
+      // @match			   *://www.zhihu.com/
+      // @match        *://www.zhihu.com/signin*
+      const styleNode = document.createElement('style')
+      if (config.resetTitle) {
+        setTimeout(function () {
+          document.title = '知乎'
+        }, 3e3)
+      }
 
-  if (config.resetTitle) {
-    setTimeout(function () {
-      document.title = '知乎'
-    }, 3e3)
-  }
+      let cssFix = ''
+      if (config.fullWidth) {
+        cssFix += '.Question-mainColumn {width: 100%;}' // 答案页全宽
+      }
+      if (config.hideHeader) {
+        cssFix += 'header{display:none !important;}' // 去掉浮动头部
+      }
+      if (config.hideSidebar) {
+        cssFix += '.Question-sideColumn--sticky{display:none !important;}' // 去掉侧边栏
+      }
+      if (config.removeLoginAlert) {
+        cssFix +=
+          'html{overflow:auto !important;} ' +
+          '.Modal-wrapper {display:none !important;}' // 干掉登陆提示
+      }
 
-  let cssFix = ''
-  if (config.fullWidth) {
-    cssFix += '.Question-mainColumn {width: 100%;}' // 答案页全宽
+      styleNode.innerText = cssFix
+      document.body.append(styleNode)
+      break
+    case /link.zhihu.com/.test(href):
+      // @match        *://link.zhihu.com/*
+      function getQueryVariable(name) {
+        const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+        const result = window.location.search.substr(1).match(reg)
+        if (result != null) {
+          return decodeURI(result[2])
+        } else {
+          return null
+        }
+      }
+      if (config.directlyRoute) {
+        const target = getQueryVariable('target')
+        if (target !== null) {
+          const directLink = window.unescape(target)
+          window.location.href = directLink
+        }
+      }
+      break
   }
-  if (config.hideHeader) {
-    cssFix += 'header{display:none !important;}' // 去掉浮动头部
-  }
-  if (config.hideSidebar) {
-    cssFix += '.Question-sideColumn--sticky{display:none !important;}' // 去掉侧边栏
-  }
-  if (config.removeLoginAlert) {
-    cssFix +=
-      'html{overflow:auto !important;} ' +
-      '.Modal-wrapper {display:none !important;}' // 干掉登陆提示
-  }
-
-  styleNode.innerText = cssFix
-  document.body.append(styleNode)
 })()
