@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Better Jianshu
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.1
+// @version      1.2
 // @description  Better Jianshu view
 // @author       Aiello Chan
-// @match        *://www.jianshu.com/p/*
+// @match        *://*.jianshu.com/*
 // @grant        none
 // ==/UserScript==
 
@@ -56,23 +56,50 @@
         type: 'checkbox',
         default: true,
       },
+      {
+        name: 'directlyRoute',
+        label: '直接跳转',
+        type: 'checkbox',
+        default: true,
+      },
     ],
   })
 
-  const styleNode = document.createElement('style')
-  console.log(config)
-
-  let cssFix = ''
-  if (config.hideHeader) {
-    cssFix += 'header{display:none !important;}' // 去掉浮动头部
+  const href = location.href
+  switch (true) {
+    case /jianshu.com\/p/.test(href):
+      // jianshu artical
+      const styleNode = document.createElement('style')
+      let cssFix = ''
+      if (config.hideHeader) {
+        cssFix += 'header{display:none !important;}' // 去掉浮动头部
+      }
+      if (config.hideSidebar) {
+        cssFix += 'aside{display:none !important;}' // 去掉侧边栏
+      }
+      if (config.fullWidth) {
+        cssFix += 'div[role="main"]>div {width: 100%;}' // 答案页全宽
+      }
+      styleNode.innerText = cssFix
+      document.body.append(styleNode)
+      break
+    case /jianshu.com\/go-wild/.test(href):
+      function getQueryVariable(name) {
+        const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+        const result = window.location.search.substr(1).match(reg)
+        if (result != null) {
+          return decodeURI(result[2])
+        } else {
+          return null
+        }
+      }
+      if (config.directlyRoute) {
+        const target = getQueryVariable('url')
+        if (target !== null) {
+          const directLink = window.unescape(target)
+          window.location.href = directLink
+        }
+      }
+      break
   }
-  if (config.hideSidebar) {
-    cssFix += 'aside{display:none !important;}' // 去掉侧边栏
-  }
-  if (config.fullWidth) {
-    cssFix += 'div[role="main"]>div {width: 100%;}' // 答案页全宽
-  }
-
-  styleNode.innerText = cssFix
-  document.body.append(styleNode)
 })()
