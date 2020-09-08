@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better Configurator
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.1
+// @version      1.2
 // @description  Better Web Plugins' Uni-Configurator
 // @author       Aiello Chan
 // @match        *://*/*
@@ -22,6 +22,7 @@
     .${NAMESPACE}__container{
       position: fixed;
       z-index: 999;
+      box-sizing: border-box;
       background: #f6f6f6;
       right: -150px;
       top: 50px;
