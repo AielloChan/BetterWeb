@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better ZhiHu
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.5
+// @version      1.6
 // @description  Better ZhiHu view
 // @author       Aiello Chan
 // @match        *://*.zhihu.com/*
