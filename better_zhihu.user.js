@@ -93,7 +93,7 @@
         }, 3e3)
       }
 
-      let cssFix = ''
+      let cssFix = '.Post-content {min-width: auto !important;}'
       if (config.fullWidth) {
         cssFix += '.Question-mainColumn {width: 100%;}' // 答案页全宽
       }
