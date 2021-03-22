@@ -1,14 +1,14 @@
 // Author: Aiello Chan <aiello.chan@gmail.com>
-// Version: 1.0
-function BetterWebConfigur(config) {
+// Version: 1.1
+function BetterWebConfigure(config) {
     const NAMESPACE = 'BETTER_WEB'
     const configurator = window.BETTER_CONFIGURATOR
-    const configuratorQuene = window.BETTER_CONFIGURATOR_QUENE || []
+    const configuratorQueue = window.BETTER_CONFIGURATOR_QUEUE || []
     if (configurator) {
         configurator(config)
     } else {
-        configuratorQuene.push(config)
-        window.BETTER_CONFIGURATOR_QUENE = configuratorQuene
+        configuratorQueue.push(config)
+        window.BETTER_CONFIGURATOR_QUEUE = configuratorQueue
     }
     const value = localStorage.getItem(`${NAMESPACE}_${config.name}`)
     const localValue = JSON.parse(value) || {}
@@ -19,3 +19,4 @@ function BetterWebConfigur(config) {
     })
     return localValue
 }
+window.BetterWebConfigure = BetterWebConfigure
