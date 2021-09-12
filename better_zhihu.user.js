@@ -95,7 +95,7 @@
   async function removeLoginAlert() {
     const target = await waitFor(() => {
       try {
-        return document.querySelector(".Modal-wrapper.undefined.Modal-enter-done").parentNode.parentNode
+        return document.querySelector(".signFlowModal").parentNode.parentNode.parentNode.parentNode
       } catch { }
     }, 1e4)
     if (target) {
