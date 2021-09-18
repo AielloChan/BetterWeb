@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better Juejin
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.2
+// @version      1.3
 // @description  Better Juejin view
 // @author       Aiello Chan
 // @match        *://juejin.im/post/*
@@ -50,6 +50,12 @@
         type: 'checkbox',
         default: true,
       },
+      {
+        name: 'hideRecommend',
+        label: '隐藏推荐',
+        type: 'checkbox',
+        default: true,
+      },
     ],
   })
 
@@ -61,6 +67,9 @@
   }
   if (config.hideSidebar) {
     cssFix += '.sidebar {display: none !important;}' // 隐藏侧边栏
+  }
+  if (config.hideRecommend) {
+    cssFix += '.recommend-box {display: none !important;}' // 隐藏推荐
   }
 
   styleNode.innerText = cssFix
