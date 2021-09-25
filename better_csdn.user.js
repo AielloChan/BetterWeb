@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better CSDN
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.1
+// @version      1.2
 // @description  Better CSDN view
 // @author       Aiello Chan
 // @match        *://blog.csdn.net/*
@@ -51,6 +51,12 @@
         default: true,
       },
       {
+        name: 'closeToolbar',
+        label: '关闭工具栏',
+        type: 'checkbox',
+        default: true,
+      },
+      {
         name: 'closeToolbarAds',
         label: '关闭工具栏广告',
         type: 'checkbox',
@@ -89,6 +95,9 @@
   }
   if (config.closeLogin) {
     cssFix += ".passport-login-container {display: none !important;}"
+  }
+  if (config.closeToolbar) {
+    cssFix += "#toolbar {display: none !important;}"
   }
   if (config.closeToolbarAds) {
     cssFix += ".toolbar-advert {display: none !important;}"
