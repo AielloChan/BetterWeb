@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Better CSDN
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.0
+// @version      1.1
 // @description  Better CSDN view
 // @author       Aiello Chan
 // @match        *://blog.csdn.net/*
@@ -44,6 +44,24 @@
         type: 'checkbox',
         default: true,
       },
+      {
+        name: 'closeLogin',
+        label: '关闭登录提示',
+        type: 'checkbox',
+        default: true,
+      },
+      {
+        name: 'closeToolbarAds',
+        label: '关闭工具栏广告',
+        type: 'checkbox',
+        default: true,
+      },
+      {
+        name: 'closeSidebarAds',
+        label: '关闭侧边栏广告',
+        type: 'checkbox',
+        default: true,
+      },
     ],
   })
 
@@ -67,7 +85,16 @@
 
   let cssFix = ''
   if (config.enableCopy) {
-    cssFix += '* {user-select: auto !important;} .signin { display: none !important;}' // 允许复制
+    cssFix += '* {user-select: auto !important;} .signin {display: none !important;}' // 允许复制
+  }
+  if (config.closeLogin) {
+    cssFix += ".passport-login-container {display: none !important;}"
+  }
+  if (config.closeToolbarAds) {
+    cssFix += ".toolbar-advert {display: none !important;}"
+  }
+  if (config.closeSidebarAds) {
+    cssFix += ".csdn-common-logo-advert {display: none !important;}"
   }
 
   styleNode.innerText = cssFix
