@@ -15,3 +15,4 @@ This project aims to build a sort of tampermonkey/AdGuard plugins(Web Browser ba
 - [Better Jianshu](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_jianshu.user.js) for 简书
 - [Better LeetCode](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_leetcode.user.js) for LeetCode
 - [Better CSDN](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_csdn.user.js) for CSDN
+- [Better Github](https://raw.githubusercontent.com/AielloChan/BetterWeb/master/better_github.user.js) for Github
