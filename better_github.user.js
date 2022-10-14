@@ -1,10 +1,10 @@
 // ==UserScript==
 // @name         Better Github
 // @namespace    github.com/AielloChan/BetterWeb
-// @version      1.0
+// @version      1.1
 // @description  Better Github view
 // @author       Aiello Chan
-// @match        *://*.github.com/*/*
+// @match        *://*.github.com/*
 // @grant        none
 // ==/UserScript==
 
